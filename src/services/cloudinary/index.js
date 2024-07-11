@@ -5,7 +5,7 @@ const cloudinary = v2;
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_NAME,
   api_key: "372693381458894",
-  api_secret: "R0LvtJY8hzFCbcw4FjXIqdBTLJA",
+  api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
 export default cloudinary;
