@@ -16,6 +16,7 @@ export const addSignalRouteHandler = async (req, res) => {
     stop,
     take,
     move,
+    action,
     image,
   } = req.body.data.attributes;
 
@@ -31,6 +32,7 @@ export const addSignalRouteHandler = async (req, res) => {
       stop,
       take,
       move,
+      action,
     });
 
     await newSignal.save();
@@ -88,13 +90,23 @@ export const getSignalRouteHandler = (req, res) => {
 
 export const patchSignalRouteHandler = async (req, res) => {
   const signalId = req.params.id;
-  const { name, type, expire, future, entry, leverage, stop, take, move } =
-    req.body;
+  const {
+    name,
+    type,
+    expire,
+    future,
+    entry,
+    leverage,
+    stop,
+    take,
+    move,
+    action,
+  } = req.body;
 
   try {
     const updatedSignal = await signalModel.findByIdAndUpdate(
       signalId,
-      { name, type, expire, future, entry, leverage, stop, take, move },
+      { name, type, expire, future, entry, leverage, stop, take, move, action },
       { new: true }
     );
 
