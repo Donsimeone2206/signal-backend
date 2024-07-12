@@ -26,6 +26,8 @@ const corsOptions = {
   origin: function (origin, callback) {
     if (!origin || whitelist.indexOf(origin) !== -1) {
       callback(null, true);
+    } else if ((origin = "http://localhost:3000")) {
+      callback(null, true);
     } else {
       callback(new Error("Not allowed by CORS"));
     }
@@ -35,7 +37,11 @@ const corsOptions = {
 const cloudinary = "./services/cloudinary/cloudinary.js";
 
 dbConnect();
-
+app.use(
+  cors({
+    origin: "http://localhost:3000", // Allow requests from localhost:3000
+  })
+);
 app.use(cors(corsOptions));
 app.use(bodyParser.json({ type: "application/vnd.api+json", strict: false }));
 
