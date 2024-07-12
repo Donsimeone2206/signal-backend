@@ -15,18 +15,15 @@ import * as fs from "fs";
 import cron from "node-cron";
 import ReseedAction from "./mongo/ReseedAction.js";
 
-
 dotenv.config();
 
 const PORT = process.env.PORT || 8080;
 const app = express();
 
-const whitelist = [process.env.APP_URL_CLIENT];
+const whitelist = [process.env.APP_URL_CLIENT, "http://localhost:3000"];
 const corsOptions = {
   origin: function (origin, callback) {
     if (!origin || whitelist.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else if ((origin = "http://localhost:3000")) {
       callback(null, true);
     } else {
       callback(new Error("Not allowed by CORS"));
@@ -34,14 +31,10 @@ const corsOptions = {
   },
   credentials: true,
 };
-const cloudinary = "./services/cloudinary/cloudinary.js";
 
 dbConnect();
-app.use(
-  cors({
-    origin: "http://localhost:3000", // Allow requests from localhost:3000
-  })
-);
+
+// Use CORS middleware
 app.use(cors(corsOptions));
 app.use(bodyParser.json({ type: "application/vnd.api+json", strict: false }));
 
